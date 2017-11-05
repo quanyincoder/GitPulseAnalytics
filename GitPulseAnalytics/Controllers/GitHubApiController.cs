@@ -37,7 +37,7 @@ namespace GitPulseAnalytics.Controllers
 			// per GitHub documentation, we should explictly specify media type.
 			request.AddHeader("Accept", "application/vnd.github.v3+json");
 			// add read-only access authorization token
-			request.AddHeader("Authorization", "Bearer 8515854c8e7fb33a257e745bfc35b5a84ecacdf8");
+			request.AddHeader("Authorization", "Bearer e0a5440fd0a5fc2d7be3fd031ff7ae49707c34c3");
 			// specify date time format
 			request.DateFormat = "yyyy-MM-ddTHH:mm:ssZ";
 
@@ -106,7 +106,7 @@ namespace GitPulseAnalytics.Controllers
 			var issues = new List<Issue>();
 
 			request.AddHeader("Accept", "application/vnd.github.v3+json");
-			request.AddHeader("Authorization", "Bearer 8515854c8e7fb33a257e745bfc35b5a84ecacdf8");
+			request.AddHeader("Authorization", "Bearer e0a5440fd0a5fc2d7be3fd031ff7ae49707c34c3");
 			request.AddQueryParameter("per_page", "100");
 			request.DateFormat = "yyyy-MM-ddTHH:mm:ssZ";
 
