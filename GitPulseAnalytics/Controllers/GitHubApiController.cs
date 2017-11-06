@@ -1,13 +1,18 @@
 ﻿using GitPulseAnalytics.Models;
+using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace GitPulseAnalytics.Controllers
 {
+	/// <summary>
+	/// ApiController class to work with GitHub APIs.
+	/// </summary>
 	[RoutePrefix("GitHubApi")]
 	public class GitHubApiController : ApiController
 	{
@@ -43,6 +48,12 @@ namespace GitPulseAnalytics.Controllers
 
 			// execute the request to get a list of repositories
 			var reposResponse = _client.Execute<List<Repository>>(request);
+
+			if (reposResponse.StatusCode != HttpStatusCode.OK) // if the return status is not OK
+			{
+				return Content(reposResponse.StatusCode, JsonConvert.DeserializeObject(reposResponse.Content));
+			}
+
 			var repos = reposResponse.Data;
 
 			// make a list to collect the results
@@ -56,6 +67,11 @@ namespace GitPulseAnalytics.Controllers
 
 				// execute the request to get the first paginated result
 				var response = _client.Execute<List<PullRequest>>(request);
+
+				if (response.StatusCode != HttpStatusCode.OK)
+				{
+					return Content(response.StatusCode, JsonConvert.DeserializeObject(response.Content));
+				}
 
 				// parse the Link Header from the response
 				var linkHeader = new LinkHeader(response.Headers.FirstOrDefault(h => h.Name == "Link")?.Value.ToString());
@@ -111,6 +127,11 @@ namespace GitPulseAnalytics.Controllers
 			request.DateFormat = "yyyy-MM-ddTHH:mm:ssZ";
 
 			var response = _client.Execute<SearchResultContainer>(request);
+
+			if (response.StatusCode != HttpStatusCode.OK)
+			{
+				return Content(response.StatusCode, JsonConvert.DeserializeObject(response.Content));
+			}
 
 			if (response.Data.TotalCount > 1000) // the results exceed GitHub search API's limit of 1000
 			{

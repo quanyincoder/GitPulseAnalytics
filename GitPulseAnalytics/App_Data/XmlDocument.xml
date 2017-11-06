@@ -481,6 +481,11 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="T:GitPulseAnalytics.Controllers.GitHubApiController">
+            <summary>
+            ApiController class to work with GitHub APIs.
+            </summary>
+        </member>
         <member name="M:GitPulseAnalytics.Controllers.GitHubApiController.#ctor">
             <summary>
             Constructor
